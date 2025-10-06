@@ -5,6 +5,7 @@ import Sidebar from './components/Sidebar'
 import Header from './components/Header'
 import Dashboard from './pages/Dashboard'
 import Profile from './pages/Profile'
+import Settings from './pages/Settings'
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -24,6 +25,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/settings" element={<Settings />} />
               </Routes>
             </div>
           </main>
