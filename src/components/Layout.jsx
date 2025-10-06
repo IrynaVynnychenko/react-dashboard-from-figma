@@ -13,7 +13,7 @@ export const useLayout = () => {
 const Layout = ({ children }) => {
   return (
     <LayoutContext.Provider value={{}}>
-      <div className="flex h-screen bg-gray-50">
+      <div className="flex min-h-screen">
         {children}
       </div>
     </LayoutContext.Provider>

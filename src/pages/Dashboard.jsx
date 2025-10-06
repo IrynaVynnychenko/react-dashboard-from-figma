@@ -17,7 +17,7 @@ const Dashboard = () => {
       change: '+12.5%',
       changeType: 'positive',
       icon: Users,
-      color: 'bg-blue-500'
+      color: 'bg-gradient-to-br from-purple-500 to-pink-500'
     },
     {
       title: 'Revenue',
@@ -25,7 +25,7 @@ const Dashboard = () => {
       change: '+8.2%',
       changeType: 'positive',
       icon: DollarSign,
-      color: 'bg-green-500'
+      color: 'bg-gradient-to-br from-success-500 to-success-600'
     },
     {
       title: 'Growth',
@@ -33,7 +33,7 @@ const Dashboard = () => {
       change: '-2.1%',
       changeType: 'negative',
       icon: TrendingUp,
-      color: 'bg-purple-500'
+      color: 'bg-gradient-to-br from-secondary-500 to-secondary-600'
     },
     {
       title: 'Active Users',
@@ -41,7 +41,7 @@ const Dashboard = () => {
       change: '+5.3%',
       changeType: 'positive',
       icon: Activity,
-      color: 'bg-orange-500'
+      color: 'bg-gradient-to-br from-accent-500 to-accent-600'
     }
   ]
 
@@ -77,17 +77,17 @@ const Dashboard = () => {
               </div>
               <div className="mt-4 flex items-center">
                 {stat.changeType === 'positive' ? (
-                  <ArrowUpRight className="w-4 h-4 text-green-500" />
+                  <ArrowUpRight className="w-4 h-4 text-success-500" />
                 ) : (
                   <ArrowDownRight className="w-4 h-4 text-red-500" />
                 )}
                 <span className={clsx(
                   'ml-1 text-sm font-medium',
-                  stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'
+                  stat.changeType === 'positive' ? 'text-success-600' : 'text-red-600'
                 )}>
                   {stat.change}
                 </span>
-                <span className="ml-2 text-sm text-gray-500">vs last month</span>
+                <span className="ml-2 text-sm text-dark-500">vs last month</span>
               </div>
             </div>
           )
@@ -101,7 +101,7 @@ const Dashboard = () => {
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-medium text-gray-900">Analytics Overview</h3>
             <div className="flex items-center space-x-4">
-              <select className="text-sm border border-gray-300 rounded-lg px-3 py-1 focus:outline-none focus:ring-2 focus:ring-primary-500">
+              <select className="text-sm border border-gray-300 rounded-lg px-3 py-1 outline-none">
                 <option>Last 12 months</option>
                 <option>Last 6 months</option>
                 <option>Last 3 months</option>
@@ -117,8 +117,8 @@ const Dashboard = () => {
           <div className="space-y-4">
             {recentActivity.map((activity) => (
               <div key={activity.id} className="flex items-start space-x-3">
-                <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
-                  <span className="text-xs font-medium text-primary-700">
+                <div className="w-8 h-8 bg-gradient-to-br from-purple-200 via-pink-200 to-orange-200 rounded-full flex items-center justify-center">
+                  <span className="text-xs font-medium text-purple-800">
                     {activity.user.split(' ').map(n => n[0]).join('')}
                   </span>
                 </div>
@@ -131,7 +131,7 @@ const Dashboard = () => {
               </div>
             ))}
           </div>
-          <button className="mt-4 text-sm text-primary-600 hover:text-primary-700 font-medium">
+          <button className="mt-4 text-sm text-purple-600 hover:text-purple-700 font-medium">
             View all activity
           </button>
         </div>
@@ -155,20 +155,20 @@ const Dashboard = () => {
           <h3 className="text-lg font-medium text-gray-900 mb-4">System Status</h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600">Server Status</span>
-              <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">
+              <span className="text-sm text-dark-600">Server Status</span>
+              <span className="px-2 py-1 text-xs font-medium bg-success-100 text-success-800 rounded-full">
                 Online
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600">Database</span>
-              <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">
+              <span className="text-sm text-dark-600">Database</span>
+              <span className="px-2 py-1 text-xs font-medium bg-success-100 text-success-800 rounded-full">
                 Connected
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600">API Response</span>
-              <span className="px-2 py-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full">
+              <span className="text-sm text-dark-600">API Response</span>
+              <span className="px-2 py-1 text-xs font-medium bg-warning-100 text-warning-800 rounded-full">
                 245ms
               </span>
             </div>

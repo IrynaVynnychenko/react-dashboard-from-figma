@@ -57,28 +57,28 @@ const AnalyticsChart = () => {
         >
           <defs>
             <linearGradient id="colorUsers" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8}/>
-              <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.1}/>
+              <stop offset="5%" stopColor="#0ea5e9" stopOpacity={0.8}/>
+              <stop offset="95%" stopColor="#0ea5e9" stopOpacity={0.1}/>
             </linearGradient>
             <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#10b981" stopOpacity={0.8}/>
-              <stop offset="95%" stopColor="#10b981" stopOpacity={0.1}/>
+              <stop offset="5%" stopColor="#22c55e" stopOpacity={0.8}/>
+              <stop offset="95%" stopColor="#22c55e" stopOpacity={0.1}/>
             </linearGradient>
             <linearGradient id="colorOrders" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.8}/>
-              <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0.1}/>
+              <stop offset="5%" stopColor="#d946ef" stopOpacity={0.8}/>
+              <stop offset="95%" stopColor="#d946ef" stopOpacity={0.1}/>
             </linearGradient>
           </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+          <CartesianGrid strokeDasharray="3 3" stroke="#cbd5e1" />
           <XAxis 
             dataKey="name" 
-            stroke="#6b7280"
+            stroke="#64748b"
             fontSize={12}
             tickLine={false}
             axisLine={false}
           />
           <YAxis 
-            stroke="#6b7280"
+            stroke="#64748b"
             fontSize={12}
             tickLine={false}
             axisLine={false}
@@ -95,27 +95,27 @@ const AnalyticsChart = () => {
             type="monotone"
             dataKey="users"
             stackId="1"
-            stroke="#3b82f6"
+            stroke="#0ea5e9"
             fill="url(#colorUsers)"
-            strokeWidth={2}
+            strokeWidth={3}
             name="Users"
           />
           <Area
             type="monotone"
             dataKey="revenue"
             stackId="2"
-            stroke="#10b981"
+            stroke="#22c55e"
             fill="url(#colorRevenue)"
-            strokeWidth={2}
+            strokeWidth={3}
             name="Revenue"
           />
           <Area
             type="monotone"
             dataKey="orders"
             stackId="3"
-            stroke="#8b5cf6"
+            stroke="#d946ef"
             fill="url(#colorOrders)"
-            strokeWidth={2}
+            strokeWidth={3}
             name="Orders"
           />
         </AreaChart>

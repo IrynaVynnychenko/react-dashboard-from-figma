@@ -38,27 +38,27 @@ const Sidebar = ({ isOpen, onClose }) => {
       {/* Overlay for mobile */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-gray-600 bg-opacity-75 z-20 lg:hidden"
+          className="fixed inset-0 bg-dark-600 bg-opacity-75 z-20 lg:hidden"
           onClick={onClose}
         />
       )}
 
       {/* Sidebar */}
-      <div className={clsx(
-        'fixed inset-y-0 left-0 z-30 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0',
+      <aside className={clsx(
+        'fixed inset-y-0 left-0 z-30 w-64 bg-white/60 backdrop-blur-md shadow-xl transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 flex flex-col',
         isOpen ? 'translate-x-0' : '-translate-x-full'
       )}>
-        <div className="flex items-center justify-between h-16 px-6 border-b border-gray-200">
-          <h1 className="text-xl font-bold text-gray-900">Dashboard</h1>
+        <div className="flex items-center justify-between h-16 px-6 border-b border-white/20 flex-shrink-0">
+          <h1 className="text-xl font-bold text-dark-900">Dashboard</h1>
           <button
             onClick={onClose}
-            className="lg:hidden p-2 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100"
+            className="lg:hidden p-2 rounded-md text-dark-400 hover:text-dark-600 hover:bg-dark-100"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <nav className="mt-6 px-3">
+        <nav className="mt-6 px-3 flex-1 overflow-y-auto">
           <ul className="space-y-1">
             {menuItems.map((item) => {
               const Icon = item.icon
@@ -74,15 +74,15 @@ const Sidebar = ({ isOpen, onClose }) => {
                       }
                     }}
                     className={clsx(
-                      'w-full flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200',
+                      'w-full flex items-center px-3 py-2 text-sm font-medium rounded-xl transition-all duration-300',
                       isActive
-                        ? 'bg-primary-50 text-primary-700 border-r-2 border-primary-700'
-                        : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                        ? 'bg-gradient-to-r from-purple-100 via-pink-100 to-orange-100 text-purple-800 shadow-lg transform scale-105'
+                        : 'text-dark-700 hover:bg-white/50 hover:text-dark-900 hover:transform hover:scale-105'
                     )}
                   >
                     <Icon className={clsx(
                       'mr-3 w-5 h-5',
-                      isActive ? 'text-primary-700' : 'text-gray-400'
+                      isActive ? 'text-purple-700' : 'text-dark-400'
                     )} />
                     <span className="flex-1 text-left">{item.label}</span>
                     {item.children && (
@@ -101,18 +101,18 @@ const Sidebar = ({ isOpen, onClose }) => {
         </nav>
 
         {/* User section at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200">
+        <div className="p-4 border-t border-white/20 flex-shrink-0">
           <div className="flex items-center">
-            <div className="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 rounded-full flex items-center justify-center">
               <span className="text-sm font-medium text-white">U</span>
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-900">User Name</p>
-              <p className="text-xs text-gray-500">user@example.com</p>
+              <p className="text-sm font-medium text-dark-900">User Name</p>
+              <p className="text-xs text-dark-500">user@example.com</p>
             </div>
           </div>
         </div>
-      </div>
+      </aside>
     </>
   )
 }
