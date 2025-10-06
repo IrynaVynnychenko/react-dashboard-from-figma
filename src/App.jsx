@@ -4,8 +4,10 @@ import Layout from './components/Layout'
 import Sidebar from './components/Sidebar'
 import Header from './components/Header'
 import Dashboard from './pages/Dashboard'
+import Analytics from './pages/Analytics'
 import Profile from './pages/Profile'
 import Settings from './pages/Settings'
+import Messages from './pages/Messages'
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -24,8 +26,10 @@ function App() {
             <div className="container mx-auto px-4 sm:px-6 py-8">
               <Routes>
                 <Route path="/" element={<Dashboard />} />
+                <Route path="/analytics" element={<Analytics />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/settings" element={<Settings />} />
+                <Route path="/messages" element={<Messages />} />
               </Routes>
             </div>
           </main>
