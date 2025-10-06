@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { 
   Menu, 
   Bell, 
@@ -115,14 +116,22 @@ const Header = ({ onToggleSidebar }) => {
               {showUserMenu && (
                 <div className="absolute right-0 mt-2 w-48 max-w-[calc(100vw-2rem)] bg-white/90 backdrop-blur-md rounded-xl shadow-2xl border border-white/30 z-[60]">
                   <div className="py-1">
-                    <button className="flex items-center w-full px-4 py-2 text-sm text-dark-700 hover:bg-white/50">
+                    <Link 
+                      to="/profile" 
+                      className="flex items-center w-full px-4 py-2 text-sm text-dark-700 hover:bg-white/50"
+                      onClick={() => setShowUserMenu(false)}
+                    >
                       <User className="w-4 h-4 mr-3" />
                       Profile
-                    </button>
-                    <button className="flex items-center w-full px-4 py-2 text-sm text-dark-700 hover:bg-white/50">
+                    </Link>
+                    <Link 
+                      to="/settings" 
+                      className="flex items-center w-full px-4 py-2 text-sm text-dark-700 hover:bg-white/50"
+                      onClick={() => setShowUserMenu(false)}
+                    >
                       <Settings className="w-4 h-4 mr-3" />
                       Settings
-                    </button>
+                    </Link>
                     <div className="border-t border-white/20"></div>
                     <button className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-white/50">
                       <LogOut className="w-4 h-4 mr-3" />

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { 
   Home, 
   Users, 
@@ -8,12 +9,13 @@ import {
   FileText, 
   Mail,
   X,
-  ChevronDown
+  ChevronDown,
+  User
 } from 'lucide-react'
 import clsx from 'clsx'
 
 const Sidebar = ({ isOpen, onClose }) => {
-  const [activeItem, setActiveItem] = useState('dashboard')
+  const location = useLocation()
   const [expandedItems, setExpandedItems] = useState({})
 
   const menuItems = [
@@ -23,6 +25,7 @@ const Sidebar = ({ isOpen, onClose }) => {
     { id: 'calendar', label: 'Calendar', icon: Calendar, href: '/calendar' },
     { id: 'documents', label: 'Documents', icon: FileText, href: '/documents' },
     { id: 'messages', label: 'Messages', icon: Mail, href: '/messages' },
+    { id: 'profile', label: 'Profile', icon: User, href: '/profile' },
     { id: 'settings', label: 'Settings', icon: Settings, href: '/settings' },
   ]
 
@@ -62,16 +65,17 @@ const Sidebar = ({ isOpen, onClose }) => {
           <ul className="space-y-1">
             {menuItems.map((item) => {
               const Icon = item.icon
-              const isActive = activeItem === item.id
+              const isActive = location.pathname === item.href
               
               return (
                 <li key={item.id}>
-                  <button
+                  <Link
+                    to={item.href}
                     onClick={() => {
-                      setActiveItem(item.id)
                       if (item.children) {
                         toggleExpanded(item.id)
                       }
+                      onClose()
                     }}
                     className={clsx(
                       'w-full flex items-center px-3 py-2 text-sm font-medium rounded-xl transition-all duration-300',
@@ -91,7 +95,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                         expandedItems[item.id] && 'rotate-180'
                       )} />
                     )}
-                  </button>
+                  </Link>
                   
                   {/* Submenu items would go here if needed */}
                 </li>
@@ -102,7 +106,11 @@ const Sidebar = ({ isOpen, onClose }) => {
 
         {/* User section at bottom */}
         <div className="p-4 border-t border-white/20 flex-shrink-0">
-          <div className="flex items-center">
+          <Link 
+            to="/profile" 
+            className="flex items-center hover:bg-white/50 rounded-lg p-2 -m-2 transition-colors"
+            onClick={onClose}
+          >
             <div className="w-8 h-8 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 rounded-full flex items-center justify-center">
               <span className="text-sm font-medium text-white">U</span>
             </div>
@@ -110,7 +118,7 @@ const Sidebar = ({ isOpen, onClose }) => {
               <p className="text-sm font-medium text-dark-900">User Name</p>
               <p className="text-xs text-dark-500">user@example.com</p>
             </div>
-          </div>
+          </Link>
         </div>
       </aside>
     </>
