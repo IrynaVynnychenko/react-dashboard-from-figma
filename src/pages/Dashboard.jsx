@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { 
   Users, 
   DollarSign, 
@@ -7,9 +8,10 @@ import {
   ArrowDownRight
 } from 'lucide-react'
 import clsx from 'clsx'
-import AnalyticsChart from '../components/AnalyticsChart'
+import AnalyticsOverview, { PERIOD_OPTIONS } from '../components/AnalyticsOverview'
 
 const Dashboard = () => {
+  const [chartPeriod, setChartPeriod] = useState('12m')
   const stats = [
     {
       title: 'Total Users',
@@ -98,17 +100,21 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Analytics Chart */}
         <div className="lg:col-span-2 card p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-medium text-gray-900">Analytics Overview</h3>
-            <div className="flex items-center space-x-4">
-              <select className="text-sm border border-gray-300 rounded-lg px-3 py-1 outline-none">
-                <option>Last 12 months</option>
-                <option>Last 6 months</option>
-                <option>Last 3 months</option>
-              </select>
-            </div>
+          <div className="mb-5 flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-gray-900">Analytics Overview</h3>
+            <select
+              value={chartPeriod}
+              onChange={(e) => setChartPeriod(e.target.value)}
+              className="select select-sm"
+            >
+              {PERIOD_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </div>
-          <AnalyticsChart />
+          <AnalyticsOverview period={chartPeriod} />
         </div>
 
         {/* Recent activity */}

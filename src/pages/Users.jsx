@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useMemo, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { 
   Search, 
   Filter, 
@@ -17,9 +18,14 @@ import {
 import clsx from 'clsx'
 
 const Users = () => {
-  const [searchTerm, setSearchTerm] = useState('')
+  const [searchParams] = useSearchParams()
+  const [searchTerm, setSearchTerm] = useState(() => searchParams.get('q') ?? '')
   const [filterRole, setFilterRole] = useState('all')
   const [sortBy, setSortBy] = useState('name')
+
+  useEffect(() => {
+    setSearchTerm(searchParams.get('q') ?? '')
+  }, [searchParams])
 
   // Mock data for users
   const users = [
@@ -126,6 +132,22 @@ const Users = () => {
     return matchesSearch && matchesRole
   })
 
+  const sortedUsers = useMemo(() => {
+    return [...filteredUsers].sort((a, b) => {
+      switch (sortBy) {
+        case 'role':
+          return a.role.localeCompare(b.role)
+        case 'status':
+          return a.status.localeCompare(b.status)
+        case 'lastLogin':
+          return b.lastLogin.localeCompare(a.lastLogin)
+        case 'name':
+        default:
+          return a.name.localeCompare(b.name)
+      }
+    })
+  }, [filteredUsers, sortBy])
+
   const stats = [
     { label: 'Total Users', value: users.length, color: 'text-blue-600' },
     { label: 'Active Users', value: users.filter(u => u.status === 'active').length, color: 'text-green-600' },
@@ -161,14 +183,14 @@ const Users = () => {
       <div className="card p-6">
         <div className="flex flex-col sm:flex-row gap-4">
           {/* Search */}
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <div className="flex-1 input-search-wrap">
+            <Search className="input-search-icon" />
             <input
               type="text"
               placeholder="Search users..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className="input-search"
             />
           </div>
 
@@ -176,7 +198,7 @@ const Users = () => {
           <select
             value={filterRole}
             onChange={(e) => setFilterRole(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="select"
           >
             <option value="all">All Roles</option>
             <option value="admin">Admin</option>
@@ -188,7 +210,7 @@ const Users = () => {
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="select"
           >
             <option value="name">Sort by Name</option>
             <option value="role">Sort by Role</option>
@@ -230,7 +252,14 @@ const Users = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {filteredUsers.map((user) => {
+              {sortedUsers.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-6 py-12 text-center text-sm text-gray-500">
+                    No users match your search
+                  </td>
+                </tr>
+              ) : (
+              sortedUsers.map((user) => {
                 const RoleIcon = getRoleIcon(user.role)
                 return (
                   <tr key={user.id} className="hover:bg-gray-50">
@@ -297,7 +326,8 @@ const Users = () => {
                     </td>
                   </tr>
                 )
-              })}
+              })
+              )}
             </tbody>
           </table>
         </div>
@@ -315,7 +345,7 @@ const Users = () => {
           <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
             <div>
               <p className="text-sm text-gray-700">
-                Showing <span className="font-medium">1</span> to <span className="font-medium">{filteredUsers.length}</span> of{' '}
+                Showing <span className="font-medium">1</span> to <span className="font-medium">{sortedUsers.length}</span> of{' '}
                 <span className="font-medium">{users.length}</span> results
               </p>
             </div>

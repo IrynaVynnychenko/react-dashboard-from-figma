@@ -34,11 +34,53 @@
   }
 
   .card {
-    @apply bg-white/70 backdrop-blur-md rounded-xl shadow-xl border border-white/30 hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300;
+    @apply bg-white/70 backdrop-blur-md rounded-xl shadow-xl border border-white/30;
   }
 
   .input {
-    @apply w-full px-3 py-2 border border-dark-300 rounded-lg outline-none bg-white/70 backdrop-blur-sm;
+    @apply w-full px-3 py-2.5 border border-gray-200/80 rounded-lg outline-none bg-white/80 backdrop-blur-sm text-sm font-medium text-gray-700 shadow-sm transition-all duration-200;
+  }
+
+  .input:hover {
+    @apply border-purple-300 bg-white shadow-md;
+  }
+
+  .input:focus {
+    @apply border-purple-400 ring-2 ring-purple-100;
+  }
+
+  .input-search-wrap {
+    @apply relative;
+  }
+
+  .input-search-icon {
+    @apply pointer-events-none absolute left-3 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-gray-400;
+  }
+
+  .input-search {
+    @apply input pl-10;
+  }
+
+  .select {
+    @apply appearance-none cursor-pointer rounded-lg border border-gray-200/80 bg-white/80 px-4 py-2.5 pr-10 text-sm font-medium text-gray-700 shadow-sm backdrop-blur-sm outline-none transition-all duration-200;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+  }
+
+  .select:hover {
+    @apply border-purple-300 bg-white shadow-md;
+  }
+
+  .select:focus {
+    @apply border-purple-400 ring-2 ring-purple-100;
+  }
+
+  .select-sm {
+    @apply px-3 py-1.5 pr-9 text-xs;
+    background-position: right 0.5rem center;
+    background-size: 0.875rem;
   }
 
 }

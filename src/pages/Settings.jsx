@@ -140,7 +140,7 @@ const Settings = () => {
                         <select
                           value={settings.language}
                           onChange={(e) => handleSelect('language', e.target.value)}
-                          className="input pl-9 sm:pl-10 text-sm"
+                          className="select w-full pl-9 sm:pl-10"
                         >
                           <option value="en">English</option>
                           <option value="uk">Українська</option>
@@ -162,7 +162,7 @@ const Settings = () => {
                         <select
                           value={settings.timezone}
                           onChange={(e) => handleSelect('timezone', e.target.value)}
-                          className="input pl-9 sm:pl-10 text-sm"
+                          className="select w-full pl-9 sm:pl-10"
                         >
                           <option value="UTC">UTC</option>
                           <option value="America/New_York">Eastern Time</option>
@@ -181,7 +181,7 @@ const Settings = () => {
                       <select
                         value={settings.dateFormat}
                         onChange={(e) => handleSelect('dateFormat', e.target.value)}
-                        className="input text-sm"
+                        className="select w-full"
                       >
                         <option value="MM/DD/YYYY">MM/DD/YYYY</option>
                         <option value="DD/MM/YYYY">DD/MM/YYYY</option>
@@ -317,7 +317,7 @@ const Settings = () => {
                       <select
                         value={settings.profileVisibility}
                         onChange={(e) => handleSelect('profileVisibility', e.target.value)}
-                        className="input text-sm"
+                        className="select w-full"
                       >
                         <option value="public">Public</option>
                         <option value="private">Private</option>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { 
   Menu, 
   Bell, 
@@ -10,10 +10,16 @@ import {
   LogOut
 } from 'lucide-react'
 import clsx from 'clsx'
+import { filterSearchItems } from '../data/searchIndex'
 
 const Header = ({ onToggleSidebar }) => {
+  const navigate = useNavigate()
   const [showUserMenu, setShowUserMenu] = useState(false)
   const [showNotifications, setShowNotifications] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [showSearchResults, setShowSearchResults] = useState(false)
+
+  const searchResults = filterSearchItems(searchQuery)
 
   const notifications = [
     { id: 1, message: 'New message from John Doe', time: '2 min ago', unread: true },
@@ -22,6 +28,18 @@ const Header = ({ onToggleSidebar }) => {
   ]
 
   const unreadCount = notifications.filter(n => n.unread).length
+
+  const handleSearchSelect = (path) => {
+    navigate(path)
+    setSearchQuery('')
+    setShowSearchResults(false)
+  }
+
+  const closeDropdowns = () => {
+    setShowUserMenu(false)
+    setShowNotifications(false)
+    setShowSearchResults(false)
+  }
 
   return (
     <header className="sticky top-0 bg-white/60 backdrop-blur-md shadow-xl border-b border-white/30 z-40">
@@ -38,15 +56,44 @@ const Header = ({ onToggleSidebar }) => {
             
             {/* Search bar */}
             <div className="hidden md:block ml-4">
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Search className="h-4 w-4 text-dark-600" />
-                </div>
+              <div className="input-search-wrap">
+                <Search className="input-search-icon" />
                 <input
                   type="text"
-                  placeholder="Search..."
-                  className="block w-48 lg:w-64 pl-10 pr-3 py-2 border border-dark-300 rounded-lg leading-5 bg-white/70 backdrop-blur-sm placeholder-dark-500 outline-none"
+                  placeholder="Search pages, users..."
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value)
+                    setShowSearchResults(true)
+                  }}
+                  onFocus={() => setShowSearchResults(true)}
+                  className="input-search w-48 lg:w-64"
                 />
+
+                {showSearchResults && searchQuery.trim() && (
+                  <div className="absolute left-0 right-0 mt-2 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border border-white/30 z-[60] overflow-hidden">
+                    {searchResults.length > 0 ? (
+                      <ul className="py-2 max-h-72 overflow-y-auto">
+                        {searchResults.map((item) => (
+                          <li key={item.id}>
+                            <button
+                              type="button"
+                              onClick={() => handleSearchSelect(item.path)}
+                              className="w-full px-4 py-2.5 text-left hover:bg-purple-50 transition-colors"
+                            >
+                              <p className="text-sm font-medium text-gray-900">{item.label}</p>
+                              <p className="text-xs text-gray-500">
+                                {item.subtitle ?? item.group}
+                              </p>
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="px-4 py-3 text-sm text-gray-500">No results found</p>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -146,13 +193,10 @@ const Header = ({ onToggleSidebar }) => {
       </div>
 
       {/* Close dropdowns when clicking outside */}
-      {(showUserMenu || showNotifications) && (
+      {(showUserMenu || showNotifications || showSearchResults) && (
         <div
           className="fixed inset-0 z-50"
-          onClick={() => {
-            setShowUserMenu(false)
-            setShowNotifications(false)
-          }}
+          onClick={closeDropdowns}
         />
       )}
     </header>
