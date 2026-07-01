@@ -153,15 +153,17 @@ const Messages = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
       {/* Page header */}
-      <div>
+      <div className="mb-6 flex-shrink-0">
         <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Messages</h1>
         <p className="text-sm sm:text-base text-gray-600">Stay connected with your team</p>
       </div>
 
-      {/* Messages container */}
-      <div className="card overflow-hidden h-[600px] lg:h-[calc(100vh-240px)]">
+      <div className="min-h-0 flex-1 overflow-y-auto">
+        <div className="space-y-6 pb-1">
+          {/* Messages container */}
+          <div className="card overflow-hidden h-[min(640px,calc(100dvh-12rem))] sm:h-[min(680px,calc(100dvh-13rem))]">
         <div className="grid grid-cols-1 lg:grid-cols-3 h-full">
           {/* Chat list sidebar */}
           <div className={`lg:col-span-1 border-r border-gray-200 flex flex-col h-full ${showChatWindow ? 'hidden lg:flex' : 'flex'}`}>
@@ -421,6 +423,8 @@ const Messages = () => {
               <p className="text-lg font-bold text-gray-900">24</p>
             </div>
           </div>
+        </div>
+      </div>
         </div>
       </div>
     </div>

@@ -21,6 +21,7 @@ const AppContent = () => {
   const location = useLocation()
   const isMobile = useMediaQuery('(max-width: 767px)')
   const isMobileNotifications = isMobile && location.pathname === '/notifications'
+  const isMessagesPage = location.pathname === '/messages'
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen)
@@ -35,14 +36,15 @@ const AppContent = () => {
         <Header onToggleSidebar={toggleSidebar} />
         <main
           className={clsx(
-            'flex-1 overflow-x-hidden overflow-y-auto',
-            isMobileNotifications && 'overflow-hidden'
+            'flex min-h-0 flex-1 flex-col overflow-x-hidden',
+            (isMobileNotifications || isMessagesPage) ? 'overflow-hidden' : 'overflow-y-auto'
           )}
         >
           <div
             className={clsx(
               'container mx-auto px-4 py-8 sm:px-6',
-              isMobileNotifications && 'p-0'
+              isMobileNotifications && 'p-0',
+              isMessagesPage && 'flex h-full min-h-0 flex-col py-6 sm:py-8'
             )}
           >
             <Routes>
