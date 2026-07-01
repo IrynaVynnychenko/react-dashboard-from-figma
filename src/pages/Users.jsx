@@ -13,21 +13,63 @@ import {
   ShieldCheck,
   UserX,
   Edit,
-  Trash2
+  Trash2,
+  X
 } from 'lucide-react'
 import clsx from 'clsx'
+
+const DEFAULT_ADVANCED_FILTERS = {
+  status: 'all',
+  location: 'all',
+  joinDateFrom: '',
+  joinDateTo: '',
+  lastLoginFrom: '',
+  lastLoginTo: '',
+}
+
+const matchesDateRange = (date, from, to) => {
+  if (from && date < from) return false
+  if (to && date > to) return false
+  return true
+}
 
 const Users = () => {
   const [searchParams] = useSearchParams()
   const [searchTerm, setSearchTerm] = useState(() => searchParams.get('q') ?? '')
   const [filterRole, setFilterRole] = useState('all')
   const [sortBy, setSortBy] = useState('name')
+  const [showMoreFilters, setShowMoreFilters] = useState(false)
+  const [advancedFilters, setAdvancedFilters] = useState(DEFAULT_ADVANCED_FILTERS)
 
   useEffect(() => {
     setSearchTerm(searchParams.get('q') ?? '')
   }, [searchParams])
 
   const users = USERS
+
+  const locations = useMemo(
+    () => [...new Set(users.map((user) => user.location))].sort(),
+    [users]
+  )
+
+  const advancedFilterCount = useMemo(() => {
+    let count = 0
+    if (advancedFilters.status !== 'all') count++
+    if (advancedFilters.location !== 'all') count++
+    if (advancedFilters.joinDateFrom) count++
+    if (advancedFilters.joinDateTo) count++
+    if (advancedFilters.lastLoginFrom) count++
+    if (advancedFilters.lastLoginTo) count++
+    return count
+  }, [advancedFilters])
+
+  const updateAdvancedFilter = (key, value) => {
+    setAdvancedFilters((prev) => ({ ...prev, [key]: value }))
+  }
+
+  const clearAdvancedFilters = () => {
+    setAdvancedFilters(DEFAULT_ADVANCED_FILTERS)
+  }
 
   const getStatusBadge = (status) => {
     const statusConfig = {
@@ -51,12 +93,38 @@ const Users = () => {
     return roleConfig[role] || 'bg-gray-100 text-gray-800'
   }
 
-  const filteredUsers = users.filter(user => {
-    const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         user.email.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesRole = filterRole === 'all' || user.role.toLowerCase() === filterRole.toLowerCase()
-    return matchesSearch && matchesRole
-  })
+  const filteredUsers = useMemo(() => {
+    return users.filter((user) => {
+      const matchesSearch =
+        user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchTerm.toLowerCase())
+      const matchesRole =
+        filterRole === 'all' || user.role.toLowerCase() === filterRole.toLowerCase()
+      const matchesStatus =
+        advancedFilters.status === 'all' || user.status === advancedFilters.status
+      const matchesLocation =
+        advancedFilters.location === 'all' || user.location === advancedFilters.location
+      const matchesJoinDate = matchesDateRange(
+        user.joinDate,
+        advancedFilters.joinDateFrom,
+        advancedFilters.joinDateTo
+      )
+      const matchesLastLogin = matchesDateRange(
+        user.lastLogin,
+        advancedFilters.lastLoginFrom,
+        advancedFilters.lastLoginTo
+      )
+
+      return (
+        matchesSearch &&
+        matchesRole &&
+        matchesStatus &&
+        matchesLocation &&
+        matchesJoinDate &&
+        matchesLastLogin
+      )
+    })
+  }, [users, searchTerm, filterRole, advancedFilters])
 
   const sortedUsers = useMemo(() => {
     return [...filteredUsers].sort((a, b) => {
@@ -144,11 +212,113 @@ const Users = () => {
             <option value="lastLogin">Sort by Last Login</option>
           </select>
 
-          <button className="btn btn-secondary">
+          <button
+            type="button"
+            onClick={() => setShowMoreFilters((prev) => !prev)}
+            className={clsx(
+              'btn btn-secondary relative',
+              (showMoreFilters || advancedFilterCount > 0) && 'ring-2 ring-purple-300 dark:ring-purple-700'
+            )}
+          >
             <Filter className="w-4 h-4 mr-2" />
             More Filters
+            {advancedFilterCount > 0 && (
+              <span className="ml-2 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-purple-500 px-1.5 text-xs font-semibold text-white">
+                {advancedFilterCount}
+              </span>
+            )}
           </button>
         </div>
+
+        {showMoreFilters && (
+          <div className="mt-4 border-t border-gray-200 pt-4">
+            <div className="mb-4 flex items-center justify-between gap-3">
+              <h3 className="text-sm font-medium text-gray-900">Advanced Filters</h3>
+              {advancedFilterCount > 0 && (
+                <button
+                  type="button"
+                  onClick={clearAdvancedFilters}
+                  className="inline-flex items-center text-xs font-medium text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300"
+                >
+                  <X className="mr-1 h-3.5 w-3.5" />
+                  Clear filters
+                </button>
+              )}
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <div>
+                <label className="mb-2 block text-xs font-medium text-gray-700">Status</label>
+                <select
+                  value={advancedFilters.status}
+                  onChange={(e) => updateAdvancedFilter('status', e.target.value)}
+                  className="select w-full"
+                >
+                  <option value="all">All Statuses</option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                  <option value="pending">Pending</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="mb-2 block text-xs font-medium text-gray-700">Location</label>
+                <select
+                  value={advancedFilters.location}
+                  onChange={(e) => updateAdvancedFilter('location', e.target.value)}
+                  className="select w-full"
+                >
+                  <option value="all">All Locations</option>
+                  {locations.map((location) => (
+                    <option key={location} value={location}>
+                      {location}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="mb-2 block text-xs font-medium text-gray-700">Join Date From</label>
+                <input
+                  type="date"
+                  value={advancedFilters.joinDateFrom}
+                  onChange={(e) => updateAdvancedFilter('joinDateFrom', e.target.value)}
+                  className="input"
+                />
+              </div>
+
+              <div>
+                <label className="mb-2 block text-xs font-medium text-gray-700">Join Date To</label>
+                <input
+                  type="date"
+                  value={advancedFilters.joinDateTo}
+                  onChange={(e) => updateAdvancedFilter('joinDateTo', e.target.value)}
+                  className="input"
+                />
+              </div>
+
+              <div>
+                <label className="mb-2 block text-xs font-medium text-gray-700">Last Login From</label>
+                <input
+                  type="date"
+                  value={advancedFilters.lastLoginFrom}
+                  onChange={(e) => updateAdvancedFilter('lastLoginFrom', e.target.value)}
+                  className="input"
+                />
+              </div>
+
+              <div>
+                <label className="mb-2 block text-xs font-medium text-gray-700">Last Login To</label>
+                <input
+                  type="date"
+                  value={advancedFilters.lastLoginTo}
+                  onChange={(e) => updateAdvancedFilter('lastLoginTo', e.target.value)}
+                  className="input"
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Users table */}

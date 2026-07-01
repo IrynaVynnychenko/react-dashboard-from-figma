@@ -55,9 +55,9 @@ const Header = ({ onToggleSidebar }) => {
   }
 
   return (
-    <header className="sticky top-0 bg-white/60 dark:bg-dark-900/60 backdrop-blur-md shadow-xl border-b border-white/30 dark:border-dark-700/50 z-40">
-      <div className="px-4 sm:px-6 py-4">
-        <div className="flex items-center gap-2 sm:gap-3">
+    <header className="sticky top-0 z-40 h-16 border-b border-white/30 bg-white/60 shadow-xl backdrop-blur-md dark:border-dark-700/50 dark:bg-dark-900/60">
+      <div className="flex h-full items-center px-4 sm:px-6">
+        <div className="flex w-full items-center gap-2 sm:gap-3">
           <button
             type="button"
             onClick={onToggleSidebar}

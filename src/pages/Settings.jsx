@@ -458,7 +458,7 @@ const Settings = () => {
                       </label>
                     </div>
 
-                    <div className="flex items-center justify-between gap-3 pb-4 border-b border-gray-200">
+                    <div className="flex items-center justify-between gap-3 pb-4">
                       <div className="flex-1 min-w-0">
                         <p className="text-xs sm:text-sm font-medium text-gray-900">Weekly Digest</p>
                         <p className="text-xs text-gray-500 mt-1">Get a weekly summary of your activity</p>
