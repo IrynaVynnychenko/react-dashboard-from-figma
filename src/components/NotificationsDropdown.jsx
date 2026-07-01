@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Bell } from 'lucide-react'
 import { useNotifications } from '../context/NotificationsContext'
 import NotificationItem from './NotificationItem'
@@ -18,7 +18,11 @@ const NotificationsDropdown = ({ onClose }) => {
   }
 
   return (
-    <div className="absolute right-0 mt-2 w-80 max-w-[calc(100vw-2rem)] bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border border-white/30 z-[60] overflow-hidden">
+    <div
+      className="absolute right-0 top-full z-[60] mt-2 w-80 max-h-[min(32rem,calc(100vh-6rem))] overflow-hidden rounded-xl border border-white/30 bg-white/95 shadow-2xl backdrop-blur-md"
+      role="dialog"
+      aria-label="Notifications"
+    >
       <div className="flex items-center justify-between border-b border-white/20 px-4 py-3">
         <div className="flex items-center gap-2">
           <h3 className="text-base font-semibold text-gray-900">Notifications</h3>
@@ -63,13 +67,16 @@ const NotificationsDropdown = ({ onClose }) => {
       </div>
 
       <div className="border-t border-gray-100 p-3">
-        <Link
-          to="/notifications"
-          onClick={onClose}
+        <button
+          type="button"
+          onClick={() => {
+            onClose()
+            navigate('/notifications')
+          }}
           className="block w-full rounded-lg py-2 text-center text-sm font-medium text-purple-600 transition-colors hover:bg-purple-50"
         >
           View all notifications
-        </Link>
+        </button>
       </div>
     </div>
   )

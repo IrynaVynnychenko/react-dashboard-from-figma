@@ -85,7 +85,7 @@ const NotificationItem = ({
             e.stopPropagation()
             onDismiss()
           }}
-          className="relative z-20 rounded-lg p-1 text-gray-400 opacity-0 transition-all hover:bg-gray-100 hover:text-gray-600 group-hover:opacity-100"
+          className="relative z-20 rounded-lg p-1 text-gray-400 opacity-100 transition-all hover:bg-gray-100 hover:text-gray-600 md:opacity-0 md:group-hover:opacity-100"
           aria-label="Dismiss notification"
         >
           <X className="h-4 w-4" />

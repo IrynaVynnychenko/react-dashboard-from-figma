@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { 
   Menu, 
   Bell, 
@@ -11,10 +11,13 @@ import {
 } from 'lucide-react'
 import { filterSearchItems } from '../data/searchIndex'
 import { useNotifications } from '../context/NotificationsContext'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 import NotificationsDropdown from './NotificationsDropdown'
 
 const Header = ({ onToggleSidebar }) => {
   const navigate = useNavigate()
+  const location = useLocation()
+  const isMobile = useMediaQuery('(max-width: 767px)')
   const { unreadCount } = useNotifications()
   const [showUserMenu, setShowUserMenu] = useState(false)
   const [showNotifications, setShowNotifications] = useState(false)
@@ -35,73 +38,79 @@ const Header = ({ onToggleSidebar }) => {
     setShowSearchResults(false)
   }
 
-  const toggleNotifications = () => {
+  const handleNotificationsClick = () => {
     setShowUserMenu(false)
     setShowSearchResults(false)
+
+    if (isMobile) {
+      navigate('/notifications')
+      return
+    }
+
     setShowNotifications((prev) => !prev)
+  }
+
+  if (isMobile && location.pathname === '/notifications') {
+    return null
   }
 
   return (
     <header className="sticky top-0 bg-white/60 backdrop-blur-md shadow-xl border-b border-white/30 z-40">
       <div className="px-4 sm:px-6 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <button
-              type="button"
-              onClick={onToggleSidebar}
-              className="lg:hidden p-2 rounded-md text-dark-400 hover:text-dark-600 hover:bg-dark-100"
-            >
-              <Menu className="w-5 h-5" />
-            </button>
-            
-            <div className="hidden md:block ml-4">
-              <div className="input-search-wrap">
-                <Search className="input-search-icon" />
-                <input
-                  type="text"
-                  placeholder="Search pages, users..."
-                  value={searchQuery}
-                  onChange={(e) => {
-                    setSearchQuery(e.target.value)
-                    setShowSearchResults(true)
-                  }}
-                  onFocus={() => setShowSearchResults(true)}
-                  className="input-search w-48 lg:w-64"
-                />
+        <div className="flex items-center gap-2 sm:gap-3">
+          <button
+            type="button"
+            onClick={onToggleSidebar}
+            className="lg:hidden flex-shrink-0 rounded-md p-2 text-dark-400 hover:bg-dark-100 hover:text-dark-600"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
 
-                {showSearchResults && searchQuery.trim() && (
-                  <div className="absolute left-0 right-0 mt-2 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border border-white/30 z-[60] overflow-hidden">
-                    {searchResults.length > 0 ? (
-                      <ul className="py-2 max-h-72 overflow-y-auto">
-                        {searchResults.map((item) => (
-                          <li key={item.id}>
-                            <button
-                              type="button"
-                              onClick={() => handleSearchSelect(item.path)}
-                              className="w-full px-4 py-2.5 text-left hover:bg-purple-50 transition-colors"
-                            >
-                              <p className="text-sm font-medium text-gray-900">{item.label}</p>
-                              <p className="text-xs text-gray-500">
-                                {item.subtitle ?? item.group}
-                              </p>
-                            </button>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="px-4 py-3 text-sm text-gray-500">No results found</p>
-                    )}
-                  </div>
+          <div className="input-search-wrap min-w-0 flex-1">
+            <Search className="input-search-icon" />
+            <input
+              type="text"
+              placeholder="Search pages, users..."
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value)
+                setShowSearchResults(true)
+              }}
+              onFocus={() => setShowSearchResults(true)}
+              className="input-search w-full"
+            />
+
+            {showSearchResults && searchQuery.trim() && (
+              <div className="absolute left-0 right-0 mt-2 overflow-hidden rounded-xl border border-white/30 bg-white/95 shadow-2xl backdrop-blur-md z-[60]">
+                {searchResults.length > 0 ? (
+                  <ul className="max-h-72 overflow-y-auto py-2">
+                    {searchResults.map((item) => (
+                      <li key={item.id}>
+                        <button
+                          type="button"
+                          onClick={() => handleSearchSelect(item.path)}
+                          className="w-full px-4 py-2.5 text-left transition-colors hover:bg-purple-50"
+                        >
+                          <p className="text-sm font-medium text-gray-900">{item.label}</p>
+                          <p className="text-xs text-gray-500">
+                            {item.subtitle ?? item.group}
+                          </p>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="px-4 py-3 text-sm text-gray-500">No results found</p>
                 )}
               </div>
-            </div>
+            )}
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex flex-shrink-0 items-center gap-1 sm:gap-2">
             <div className="relative">
               <button
                 type="button"
-                onClick={toggleNotifications}
+                onClick={handleNotificationsClick}
                 className="p-2 text-dark-400 hover:text-dark-600 hover:bg-dark-100 rounded-lg relative"
                 aria-label={`Notifications${unreadCount > 0 ? `, ${unreadCount} unread` : ''}`}
               >
@@ -113,7 +122,7 @@ const Header = ({ onToggleSidebar }) => {
                 )}
               </button>
 
-              {showNotifications && (
+              {showNotifications && !isMobile && (
                 <NotificationsDropdown onClose={() => setShowNotifications(false)} />
               )}
             </div>
@@ -135,7 +144,7 @@ const Header = ({ onToggleSidebar }) => {
                   <p className="text-sm font-medium">User Name</p>
                   <p className="text-xs text-dark-500">Admin</p>
                 </div>
-                <ChevronDown className="w-4 h-4 text-dark-400" />
+                <ChevronDown className="hidden h-4 w-4 text-dark-400 sm:block" />
               </button>
 
               {showUserMenu && (
