@@ -224,8 +224,8 @@
   .dark .hover\:bg-dark-100:hover {
     background-color: rgb(51 65 85);
   }
-}
 
-.dark .after\:bg-white::after {
-  background-color: rgb(255 255 255) !important;
+  .dark .after\:bg-white::after {
+    background-color: rgb(255 255 255) !important;
+  }
 }
