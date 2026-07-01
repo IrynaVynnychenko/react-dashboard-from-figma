@@ -1,3 +1,5 @@
+import { USERS } from './users'
+
 export const SEARCH_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', path: '/', group: 'Pages', keywords: ['dashboard', 'home', 'overview'] },
   { id: 'analytics', label: 'Analytics', path: '/analytics', group: 'Pages', keywords: ['analytics', 'charts', 'metrics', 'performance'] },
@@ -6,10 +8,15 @@ export const SEARCH_ITEMS = [
   { id: 'calendar', label: 'Calendar', path: '/calendar', group: 'Pages', keywords: ['calendar', 'events', 'schedule'] },
   { id: 'profile', label: 'Profile', path: '/profile', group: 'Pages', keywords: ['profile', 'account'] },
   { id: 'settings', label: 'Settings', path: '/settings', group: 'Pages', keywords: ['settings', 'preferences', 'config'] },
-  { id: 'user-john', label: 'John Doe', subtitle: 'john.doe@example.com', path: '/users?q=john', group: 'Users', keywords: ['john', 'doe', 'admin'] },
-  { id: 'user-jane', label: 'Jane Smith', subtitle: 'jane.smith@example.com', path: '/users?q=jane', group: 'Users', keywords: ['jane', 'smith'] },
-  { id: 'user-bob', label: 'Bob Johnson', subtitle: 'bob.johnson@example.com', path: '/users?q=bob', group: 'Users', keywords: ['bob', 'johnson', 'moderator'] },
-  { id: 'user-alice', label: 'Alice Brown', subtitle: 'alice.brown@example.com', path: '/users?q=alice', group: 'Users', keywords: ['alice', 'brown'] },
+  { id: 'notifications', label: 'Notifications', path: '/notifications', group: 'Pages', keywords: ['notifications', 'alerts', 'bell', 'updates'] },
+  ...USERS.map((user) => ({
+    id: `user-${user.id}`,
+    label: user.name,
+    subtitle: user.email,
+    path: `/users?q=${user.name.split(' ')[0].toLowerCase()}`,
+    group: 'Users',
+    keywords: user.name.toLowerCase().split(' ').concat([user.role.toLowerCase()]),
+  })),
   { id: 'chat-sarah', label: 'Sarah Johnson', subtitle: 'Messages', path: '/messages', group: 'Chats', keywords: ['sarah', 'johnson', 'chat'] },
   { id: 'chat-mike', label: 'Mike Chen', subtitle: 'Messages', path: '/messages', group: 'Chats', keywords: ['mike', 'chen', 'meeting'] },
 ]

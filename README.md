@@ -37,7 +37,7 @@ The project is configured for automatic deployment to GitHub Pages. The site is 
 ```
 src/
 ├── components/     # React components
-├── pages/         # Pages
-├── utils/         # Utilities
-└── App.jsx        # Main component
+├── data/           # Shared mock data & search index
+├── pages/          # Pages
+└── App.jsx         # Main component
 ```

@@ -5,14 +5,12 @@ import clsx from 'clsx'
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date())
   const [selectedDate, setSelectedDate] = useState(new Date())
-  const [view, setView] = useState('month') // month, week, day
 
-  // Sample events
   const events = [
     {
       id: 1,
       title: 'Team Meeting',
-      date: new Date(2025, 9, 8, 10, 0), // Oct 8, 2025, 10:00
+      date: new Date(2026, 6, 3, 10, 0),
       duration: '1h',
       color: 'purple',
       location: 'Conference Room A',
@@ -21,7 +19,7 @@ const Calendar = () => {
     {
       id: 2,
       title: 'Project Review',
-      date: new Date(2025, 9, 10, 14, 30), // Oct 10, 2025, 14:30
+      date: new Date(2026, 6, 8, 14, 30),
       duration: '2h',
       color: 'pink',
       location: 'Online',
@@ -30,7 +28,7 @@ const Calendar = () => {
     {
       id: 3,
       title: 'Client Presentation',
-      date: new Date(2025, 9, 12, 11, 0), // Oct 12, 2025, 11:00
+      date: new Date(2026, 6, 15, 11, 0),
       duration: '1.5h',
       color: 'orange',
       location: 'Meeting Room B',
@@ -39,7 +37,7 @@ const Calendar = () => {
     {
       id: 4,
       title: 'Design Workshop',
-      date: new Date(2025, 9, 15, 9, 0), // Oct 15, 2025, 9:00
+      date: new Date(2026, 6, 22, 9, 0),
       duration: '3h',
       color: 'success',
       location: 'Creative Studio',
@@ -48,7 +46,7 @@ const Calendar = () => {
     {
       id: 5,
       title: 'Sprint Planning',
-      date: new Date(2025, 9, 6, 15, 0), // Oct 6, 2025, 15:00
+      date: new Date(2026, 6, 28, 15, 0),
       duration: '2h',
       color: 'secondary',
       location: 'Online',

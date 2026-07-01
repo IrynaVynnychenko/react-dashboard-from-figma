@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { 
   Home, 
@@ -6,39 +5,27 @@ import {
   Settings, 
   BarChart3, 
   Calendar, 
-  FileText, 
   Mail,
   X,
-  ChevronDown,
   User
 } from 'lucide-react'
 import clsx from 'clsx'
 
 const Sidebar = ({ isOpen, onClose }) => {
   const location = useLocation()
-  const [expandedItems, setExpandedItems] = useState({})
 
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Home, href: '/' },
     { id: 'analytics', label: 'Analytics', icon: BarChart3, href: '/analytics' },
     { id: 'users', label: 'Users', icon: Users, href: '/users' },
     { id: 'calendar', label: 'Calendar', icon: Calendar, href: '/calendar' },
-    { id: 'documents', label: 'Documents', icon: FileText, href: '/documents' },
     { id: 'messages', label: 'Messages', icon: Mail, href: '/messages' },
     { id: 'profile', label: 'Profile', icon: User, href: '/profile' },
     { id: 'settings', label: 'Settings', icon: Settings, href: '/settings' },
   ]
 
-  const toggleExpanded = (itemId) => {
-    setExpandedItems(prev => ({
-      ...prev,
-      [itemId]: !prev[itemId]
-    }))
-  }
-
   return (
     <>
-      {/* Overlay for mobile */}
       {isOpen && (
         <div 
           className="fixed inset-0 bg-dark-600 bg-opacity-75 z-20 lg:hidden"
@@ -46,7 +33,6 @@ const Sidebar = ({ isOpen, onClose }) => {
         />
       )}
 
-      {/* Sidebar */}
       <aside className={clsx(
         'fixed inset-y-0 left-0 z-30 w-64 bg-white/60 backdrop-blur-md shadow-xl transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 flex flex-col',
         isOpen ? 'translate-x-0' : '-translate-x-full'
@@ -71,12 +57,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                 <li key={item.id}>
                   <Link
                     to={item.href}
-                    onClick={() => {
-                      if (item.children) {
-                        toggleExpanded(item.id)
-                      }
-                      onClose()
-                    }}
+                    onClick={onClose}
                     className={clsx(
                       'w-full flex items-center px-3 py-2 text-sm font-medium rounded-xl transition-all duration-300',
                       isActive
@@ -89,22 +70,13 @@ const Sidebar = ({ isOpen, onClose }) => {
                       isActive ? 'text-purple-700' : 'text-dark-400'
                     )} />
                     <span className="flex-1 text-left">{item.label}</span>
-                    {item.children && (
-                      <ChevronDown className={clsx(
-                        'w-4 h-4 transition-transform duration-200',
-                        expandedItems[item.id] && 'rotate-180'
-                      )} />
-                    )}
                   </Link>
-                  
-                  {/* Submenu items would go here if needed */}
                 </li>
               )
             })}
           </ul>
         </nav>
 
-        {/* User section at bottom */}
         <div className="p-4 border-t border-white/20 flex-shrink-0">
           <Link 
             to="/profile" 

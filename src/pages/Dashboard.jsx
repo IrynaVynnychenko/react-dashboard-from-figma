@@ -8,7 +8,8 @@ import {
   ArrowDownRight
 } from 'lucide-react'
 import clsx from 'clsx'
-import AnalyticsOverview, { PERIOD_OPTIONS } from '../components/AnalyticsOverview'
+import AnalyticsOverview from '../components/AnalyticsOverview'
+import { PERIOD_OPTIONS } from '../data/chartPeriods'
 
 const Dashboard = () => {
   const [chartPeriod, setChartPeriod] = useState('12m')
@@ -59,7 +60,7 @@ const Dashboard = () => {
       {/* Page header */}
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-600">Welcome back! Here's what's happening today.</p>
+        <p className="text-gray-600">Welcome back! Here&apos;s what&apos;s happening today.</p>
       </div>
 
       {/* Stats grid */}

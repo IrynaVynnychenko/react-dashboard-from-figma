@@ -112,7 +112,7 @@ const Analytics = () => {
           return (
             <div
               key={index}
-              className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow"
+              className="card p-6 hover:shadow-2xl transition-shadow"
             >
               <div className="flex items-center justify-between">
                 <div className={`p-3 rounded-lg ${metric.color}`}>
@@ -142,18 +142,18 @@ const Analytics = () => {
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Main Analytics Chart */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="card p-6">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center">
               <BarChart3 className="w-5 h-5 text-purple-600 mr-2" />
               <h2 className="text-xl font-semibold text-gray-900">Performance Overview</h2>
             </div>
           </div>
-          <AnalyticsChart />
+          <AnalyticsChart period={selectedPeriod} />
         </div>
 
         {/* Conversion Funnel */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="card p-6">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center">
               <PieChart className="w-5 h-5 text-blue-600 mr-2" />
@@ -189,7 +189,7 @@ const Analytics = () => {
       </div>
 
       {/* Real-time Activity */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <div className="card p-6">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center">
             <Activity className="w-5 h-5 text-green-600 mr-2" />

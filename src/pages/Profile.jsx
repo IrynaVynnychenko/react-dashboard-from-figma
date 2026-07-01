@@ -36,8 +36,7 @@ const Profile = () => {
   }
 
   const handleSave = () => {
-    // Save logic here
-    console.log('Saving profile...', formData)
+    // persist profile via API
   }
 
   const tabs = [

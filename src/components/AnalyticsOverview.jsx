@@ -10,6 +10,7 @@ import {
 } from 'recharts'
 import clsx from 'clsx'
 import { TrendingUp, TrendingDown } from 'lucide-react'
+import { PERIOD_OPTIONS } from '../data/chartPeriods'
 
 const CHART_DATA = [
   { month: 'Jan', revenue: 32400, users: 2100, sessions: 8400 },
@@ -24,12 +25,6 @@ const CHART_DATA = [
   { month: 'Oct', revenue: 51200, users: 3180, sessions: 13100 },
   { month: 'Nov', revenue: 54600, users: 3350, sessions: 13800 },
   { month: 'Dec', revenue: 58900, users: 3520, sessions: 14500 },
-]
-
-export const PERIOD_OPTIONS = [
-  { value: '12m', label: 'Last 12 months', months: 12 },
-  { value: '6m', label: 'Last 6 months', months: 6 },
-  { value: '3m', label: 'Last 3 months', months: 3 },
 ]
 
 const METRICS = [

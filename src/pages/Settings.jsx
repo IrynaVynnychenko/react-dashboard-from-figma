@@ -56,8 +56,7 @@ const Settings = () => {
   }
 
   const handleSave = () => {
-    console.log('Saving settings...', settings)
-    // Save logic here
+    // persist settings via API
   }
 
   const tabs = [
@@ -351,7 +350,7 @@ const Settings = () => {
                             <EyeOff className="w-4 h-4 text-pink-500 flex-shrink-0" />
                             <p className="text-xs sm:text-sm font-medium text-gray-900">Show activity status</p>
                           </div>
-                          <p className="text-xs text-gray-500 mt-1">Let others see when you're active</p>
+                          <p className="text-xs text-gray-500 mt-1">Let others see when you&apos;re active</p>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer flex-shrink-0">
                           <input 

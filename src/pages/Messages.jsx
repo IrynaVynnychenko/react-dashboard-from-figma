@@ -120,13 +120,11 @@ const Messages = () => {
 
   const handleSendMessage = () => {
     if (messageText.trim()) {
-      // Logic to send message
-      console.log('Sending message:', messageText)
       setMessageText('')
     }
   }
 
-  const handleKeyPress = (e) => {
+  const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
       handleSendMessage()
@@ -322,7 +320,7 @@ const Messages = () => {
                       <textarea
                         value={messageText}
                         onChange={(e) => setMessageText(e.target.value)}
-                        onKeyPress={handleKeyPress}
+                        onKeyDown={handleKeyDown}
                         placeholder="Type a message..."
                         rows="1"
                         className="w-full px-4 py-2.5 pr-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none text-sm"
