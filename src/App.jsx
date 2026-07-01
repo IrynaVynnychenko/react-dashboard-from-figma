@@ -5,6 +5,7 @@ import Layout from './components/Layout'
 import Sidebar from './components/Sidebar'
 import Header from './components/Header'
 import { NotificationsProvider } from './context/NotificationsContext'
+import { ThemeProvider } from './context/ThemeContext'
 import { useMediaQuery } from './hooks/useMediaQuery'
 import Dashboard from './pages/Dashboard'
 import Analytics from './pages/Analytics'
@@ -64,9 +65,11 @@ const AppContent = () => {
 function App() {
   return (
     <BrowserRouter basename="/react-dashboard-from-figma">
-      <NotificationsProvider>
-        <AppContent />
-      </NotificationsProvider>
+      <ThemeProvider>
+        <NotificationsProvider>
+          <AppContent />
+        </NotificationsProvider>
+      </ThemeProvider>
     </BrowserRouter>
   )
 }

@@ -34,10 +34,10 @@ const Sidebar = ({ isOpen, onClose }) => {
       )}
 
       <aside className={clsx(
-        'fixed inset-y-0 left-0 z-30 w-64 bg-white/60 backdrop-blur-md shadow-xl transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 flex flex-col',
+        'fixed inset-y-0 left-0 z-30 w-64 bg-white/60 dark:bg-dark-900/60 backdrop-blur-md shadow-xl transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 flex flex-col',
         isOpen ? 'translate-x-0' : '-translate-x-full'
       )}>
-        <div className="flex items-center justify-between h-16 px-6 border-b border-white/20 flex-shrink-0">
+        <div className="flex items-center justify-between h-16 px-6 border-b border-white/20 dark:border-dark-700/50 flex-shrink-0">
           <h1 className="text-xl font-bold text-dark-900">Dashboard</h1>
           <button
             onClick={onClose}
@@ -61,8 +61,8 @@ const Sidebar = ({ isOpen, onClose }) => {
                     className={clsx(
                       'w-full flex items-center px-3 py-2 text-sm font-medium rounded-xl transition-all duration-300',
                       isActive
-                        ? 'bg-gradient-to-r from-purple-100 via-pink-100 to-orange-100 text-purple-800 shadow-lg transform scale-105'
-                        : 'text-dark-700 hover:bg-white/50 hover:text-dark-900 hover:transform hover:scale-105'
+                        ? 'bg-gradient-to-r from-purple-100 via-pink-100 to-orange-100 dark:from-purple-900/40 dark:via-pink-900/40 dark:to-orange-900/40 text-purple-800 dark:text-purple-300 shadow-lg transform scale-105'
+                        : 'text-dark-700 hover:bg-white/50 dark:hover:bg-dark-800/50 hover:text-dark-900 hover:transform hover:scale-105'
                     )}
                   >
                     <Icon className={clsx(
@@ -77,10 +77,10 @@ const Sidebar = ({ isOpen, onClose }) => {
           </ul>
         </nav>
 
-        <div className="p-4 border-t border-white/20 flex-shrink-0">
+        <div className="p-4 border-t border-white/20 dark:border-dark-700/50 flex-shrink-0">
           <Link 
             to="/profile" 
-            className="flex items-center hover:bg-white/50 rounded-lg p-2 -m-2 transition-colors"
+            className="flex items-center hover:bg-white/50 dark:hover:bg-dark-800/50 rounded-lg p-2 -m-2 transition-colors"
             onClick={onClose}
           >
             <div className="w-8 h-8 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 rounded-full flex items-center justify-center">

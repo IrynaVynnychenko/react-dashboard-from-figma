@@ -17,8 +17,10 @@ import {
   Trash2,
   Download
 } from 'lucide-react'
+import { useTheme } from '../context/ThemeContext'
 
 const Settings = () => {
+  const { theme, setTheme } = useTheme()
   const [activeTab, setActiveTab] = useState('general')
   const [settings, setSettings] = useState({
     // General
@@ -27,7 +29,6 @@ const Settings = () => {
     dateFormat: 'MM/DD/YYYY',
     
     // Appearance
-    theme: 'light',
     accentColor: 'purple',
     
     // Privacy
@@ -218,20 +219,20 @@ const Settings = () => {
                           return (
                             <button
                               key={option.value}
-                              onClick={() => handleSelect('theme', option.value)}
+                              onClick={() => setTheme(option.value)}
                               className={`
                                 p-4 rounded-lg border-2 transition-all
-                                ${settings.theme === option.value
-                                  ? 'border-purple-500 bg-purple-50 shadow-md'
-                                  : 'border-gray-200 hover:border-gray-300 bg-white'
+                                ${theme === option.value
+                                  ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/30 shadow-md'
+                                  : 'border-gray-200 dark:border-dark-600 hover:border-gray-300 dark:hover:border-dark-500 bg-white dark:bg-dark-800'
                                 }
                               `}
                             >
                               <Icon className={`w-6 h-6 mx-auto mb-2 ${
-                                settings.theme === option.value ? 'text-purple-600' : 'text-gray-400'
+                                theme === option.value ? 'text-purple-600 dark:text-purple-400' : 'text-gray-400'
                               }`} />
                               <p className={`text-sm font-medium ${
-                                settings.theme === option.value ? 'text-purple-800' : 'text-gray-700'
+                                theme === option.value ? 'text-purple-800 dark:text-purple-300' : 'text-gray-700'
                               }`}>
                                 {option.label}
                               </p>

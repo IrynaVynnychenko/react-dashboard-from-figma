@@ -55,7 +55,7 @@ const Header = ({ onToggleSidebar }) => {
   }
 
   return (
-    <header className="sticky top-0 bg-white/60 backdrop-blur-md shadow-xl border-b border-white/30 z-40">
+    <header className="sticky top-0 bg-white/60 dark:bg-dark-900/60 backdrop-blur-md shadow-xl border-b border-white/30 dark:border-dark-700/50 z-40">
       <div className="px-4 sm:px-6 py-4">
         <div className="flex items-center gap-2 sm:gap-3">
           <button
@@ -81,7 +81,7 @@ const Header = ({ onToggleSidebar }) => {
             />
 
             {showSearchResults && searchQuery.trim() && (
-              <div className="absolute left-0 right-0 mt-2 overflow-hidden rounded-xl border border-white/30 bg-white/95 shadow-2xl backdrop-blur-md z-[60]">
+              <div className="absolute left-0 right-0 mt-2 overflow-hidden rounded-xl border border-white/30 dark:border-dark-600/50 bg-white/95 dark:bg-dark-800/95 shadow-2xl backdrop-blur-md z-[60]">
                 {searchResults.length > 0 ? (
                   <ul className="max-h-72 overflow-y-auto py-2">
                     {searchResults.map((item) => (
@@ -89,7 +89,7 @@ const Header = ({ onToggleSidebar }) => {
                         <button
                           type="button"
                           onClick={() => handleSearchSelect(item.path)}
-                          className="w-full px-4 py-2.5 text-left transition-colors hover:bg-purple-50"
+                          className="w-full px-4 py-2.5 text-left transition-colors hover:bg-purple-50 dark:hover:bg-dark-700"
                         >
                           <p className="text-sm font-medium text-gray-900">{item.label}</p>
                           <p className="text-xs text-gray-500">
@@ -148,7 +148,7 @@ const Header = ({ onToggleSidebar }) => {
               </button>
 
               {showUserMenu && (
-                <div className="absolute right-0 mt-2 w-48 max-w-[calc(100vw-2rem)] bg-white/90 backdrop-blur-md rounded-xl shadow-2xl border border-white/30 z-[60]">
+                <div className="absolute right-0 mt-2 w-48 max-w-[calc(100vw-2rem)] bg-white/90 dark:bg-dark-800/90 backdrop-blur-md rounded-xl shadow-2xl border border-white/30 dark:border-dark-600/50 z-[60]">
                   <div className="py-1">
                     <Link 
                       to="/profile" 
