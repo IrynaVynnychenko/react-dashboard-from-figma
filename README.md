@@ -22,15 +22,15 @@ npm run dev
 
 # Build for production
 npm run build
-
-# Deploy to GitHub Pages
-npm run deploy
 ```
 
 ## GitHub Pages
 
-The project is configured for automatic deployment to GitHub Pages. The site is available at:
-`https://irynavynnychenko.github.io/react-dashboard-from-figma/`
+The site deploys automatically on every push to `main` via [GitHub Actions](.github/workflows/deploy.yml).
+
+**One-time setup** in the repo on GitHub: **Settings → Pages → Build and deployment → Source → GitHub Actions**.
+
+Live site: `https://irynavynnychenko.github.io/react-dashboard-from-figma/`
 
 ## Project Structure
 
